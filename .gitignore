@@ -2,6 +2,7 @@
 
 # neo4j data
 .compose
+volumes
 
 # dependencies
 /frontend/node_modules
