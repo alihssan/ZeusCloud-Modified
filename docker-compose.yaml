@@ -54,7 +54,7 @@ services:
       - 7687:7687
 
   cartography:
-    build: /home/cloudnosys/ZeusCloud/cartography/
+    build: cartography/
     entrypoint: ["gunicorn", "--bind=0.0.0.0:6000", "cartography.wsgi:app"]
     environment:
       - CARTOGRAPHY_NEO4J_URI=bolt://neo4j:7687
@@ -84,7 +84,9 @@ services:
       - backend
 
   backend:
-    image: zeuscloudhq/zeuscloud-backend:${PULL_VERSION}
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
     environment:
       - WEBSITE_DOMAIN=${WEBSITE_DOMAIN}
       - NEO4J_URI=bolt://neo4j:7687
@@ -110,7 +112,7 @@ services:
     networks:
       - app_network
     ports:
-      - 80:80
+      - 8000:80
 
 networks:
   app_network:
